@@ -1,8 +1,8 @@
+import folium
 from sgp4.api import Satrec
 from astropy import coordinates as coord
 from astropy import units as u
 from astropy.time import Time
-
 from src.ingestion.load_tle import load_tle
 
 lines = load_tle("data/raw/iss.txt")
@@ -39,10 +39,33 @@ if error == 0:
         itrs.x, itrs.y, itrs.z
     )
 
-    # Print clean results
+    lat = location.lat.deg
+    lon = location.lon.deg
+    alt = location.height.to(u.km).value
+
+    # Print results
     print(f"Time (UTC): {now.iso}")
     print(f"Latitude:   {location.lat.deg:.4f}°")
     print(f"Longitude:  {location.lon.deg:.4f}°")
     print(f"Altitude:   {location.height.to(u.km):.2f} km")
+
+    # Create interactive world map centered on ISS position
+    iss_map = folium.Map(
+        location=[lat, lon], 
+        zoom_start=3, 
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri"
+    )
+
+    folium.Marker(
+        location=[lat, lon],
+        popup=f"ISS Position<br>Lat: {lat:.2f}<br>Lon: {lon:.2f}<br>Alt: {alt:.0f} km",
+        tooltip="ISS Current Location",
+        icon=folium.Icon(color="red", icon="info-sign")
+    ).add_to(iss_map)
+
+    iss_map.save("iss_location.html")
+    print("Map successfully saved")
+
 else:
     print(f"Error in SGP4 calculation: code {error}")
