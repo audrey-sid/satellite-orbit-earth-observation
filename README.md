@@ -18,8 +18,24 @@ The main goal is to build a small Python project around satellite data, from orb
 
 ## Technologies
 
-Python, Git, GitHub, SGP4, QGIS, Sentinel-2, Scikit-learn
+Python, Git, GitHub, SGP4, Astropy, QGIS, Sentinel-2, Scikit-learn
 
 ## About the project
 
 This is a personal learning project. I will improve it step by step and add new parts as I learn more about satellite data and Earth observation.
+
+## Project Structure
+
+```text
+.
+├── data/
+│   └── raw/
+│       └── iss.txt
+├── src/
+│   ├── ingestion/
+│   │   └── load_tle.py
+│   └── orbital.py
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
