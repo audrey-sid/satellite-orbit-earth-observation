@@ -1,5 +1,6 @@
 # Satellite Orbit & Earth Observation
 ![ISS Location Map](map_preview.png)
+
 *Personal project - work in progress*
 
 I am a Master's student in Applied Mathematics and Data Science.
