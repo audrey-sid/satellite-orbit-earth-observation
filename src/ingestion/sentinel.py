@@ -1,3 +1,4 @@
+import requests
 from pystac_client import Client
 
 # Search Sentinel-2 images using the STAC API
@@ -18,27 +19,46 @@ def search_sentinel_images(bbox, date_range="2026-01-01/..", max_cloud_cover=10,
     items = list(search_query.items())
     return items[:limit]
 
+# Download the RGB preview image
+def download_preview_image(item, output_path="data/raw/sentinel_kourou.jpg"):
+    # Get preview image URL
+    preview_asset = item.assets.get("rendered_preview") or item.assets.get(
+        "thumbnail")
+
+    if preview_asset:
+        preview_url = preview_asset.href
+        print(f"Downloading: {preview_url}")
+        response = requests.get(preview_url)
+
+        # Save image if download is successful
+        if response.status_code == 200:
+            with open(output_path, "wb") as file:
+                file.write(response.content)
+            print(f"Saved: {output_path}")
+        else:
+            print(f"Error HTTP: {response.status_code}")
+    else:
+        print("No preview found.")
+
 if __name__ == "__main__":
     # Bounding Box for Kourou Space Centre
     # Format: [longitude_min, latitude_min, longitude_max, latitude_max]
-    kourou_bbox = [-52.80, 5.18, -52.60, 5.30]
+    ariane6_bbox = [-52.791, 5.251, -52.781, 5.261]
 
-    print("Searching for Sentinel-2 images over Kourou...")
+    print("Searching images...")
     results = search_sentinel_images(
-        kourou_bbox, 
+        ariane6_bbox, 
         date_range="2026-01-01/..",
         max_cloud_cover=10, 
         limit=3
         )
 
-    print(f"Number of images found: {len(results)}\n")
+    print(f"Found: {len(results)}\n")
 
-    # Loop through results and print details
-    for item in results:
-        image_id = item.id
-        date_obs = item.datetime.strftime("%Y-%m-%d")
-        cloud_pct = item.properties.get("eo:cloud_cover")
+    # If images are found, select the first one and download its preview
+    if results:
+        best_image = results[0]
+        print(f"Selected: {best_image.id}")
+        print(f"Date: {best_image.datetime.strftime('%Y-%m-%d')}\n")
 
-        print(f"ID: {image_id}")
-        print(f"Acquisition date: {date_obs}")
-        print(f"Cloud cover: {cloud_pct:.2f}%\n")
+        download_preview_image(best_image, "data/raw/sentinel_kourou.jpg")
