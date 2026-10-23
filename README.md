@@ -7,6 +7,11 @@ I am a Master's student in Applied Mathematics and Data Science.
 I created this project to learn more about the space sector and to practice data science with real satellite data.
 The main goal is to build a small Python project around satellite data, from orbital data to Earth observation images.
 
+### View Notebook Online
+You can view the main steps, outputs, and interactive maps directly in your browser:
+- **[Interactive HTML Report](notebooks/01_sentinel_analysis.html)**
+- **[Jupyter Notebook File](notebooks/01_sentinel_analysis.ipynb)**
+
 ## What I am exploring
 
 - TLE data parsing and SGP4 orbit propagation
