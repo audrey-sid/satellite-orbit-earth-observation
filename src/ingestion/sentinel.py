@@ -43,7 +43,8 @@ def download_preview_image(item, output_path="data/raw/sentinel_kourou.jpg"):
 if __name__ == "__main__":
     # Bounding Box for Kourou Space Centre
     # Format: [longitude_min, latitude_min, longitude_max, latitude_max]
-    ariane6_bbox = [-52.791, 5.251, -52.781, 5.261]
+    csg_lon, csg_lat = -52.763674, 5.189573
+    ariane6_bbox = [csg_lon - 0.01, csg_lat - 0.01, csg_lon + 0.01, csg_lat + 0.01]
 
     print("Searching images...")
     results = search_sentinel_images(
