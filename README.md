@@ -9,7 +9,7 @@ The main goal is to build a small Python project around satellite data, from orb
 
 ### View Notebook Online
 You can view the main steps, outputs, and interactive maps directly in your browser:
-- **[Interactive HTML Report](notebooks/01_sentinel_analysis.html)**
+- **[Interactive HTML Report](https://audrey-sid.github.io/satellite-orbit-earth-observation/notebooks/01_sentinel_analysis.html)**
 - **[Jupyter Notebook File](notebooks/01_sentinel_analysis.ipynb)**
 
 ## What I am exploring
